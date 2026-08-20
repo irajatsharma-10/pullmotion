@@ -1,21 +1,30 @@
 // use prisma-next
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String?
-  name      String?
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updatedAt temporal.updatedAt()
+model Movie {
+  id              String   @id
+  sourceHash      String   @unique
+  owner           String
+  repo            String
+  pullNumber      Int
+  title           String
+  author          String
+  data            Json
+  durationSeconds Int
+  createdAt       DateTime @default(now())
+  updatedAt       temporal.updatedAt()
+
+  @@index([owner, repo, pullNumber])
+  @@index([sourceHash])
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-  createdAt DateTime @default(now())
-  updatedAt temporal.updatedAt()
+model CachedPR {
+  id          String   @id
+  owner       String
+  repo        String
+  pullNumber  Int
+  headSha     String
+  data        Json
+  fetchedAt   DateTime @default(now())
+
+  @@unique([owner, repo, pullNumber, headSha])
 }
