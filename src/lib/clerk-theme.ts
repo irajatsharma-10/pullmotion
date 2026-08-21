@@ -1,0 +1,42 @@
+export const clerkAppearance = {
+  variables: {
+    colorPrimary: "#9333ea",
+    colorNeutral: "var(--text-primary)",
+    colorBackground: "var(--bg-surface)",
+    colorForeground: "var(--text-primary)",
+    colorMutedForeground: "var(--text-muted)",
+    colorDanger: "#ef4444",
+    colorSuccess: "#10b981",
+    colorWarning: "#f59e0b",
+    fontFamily: "var(--font-geist-sans), system-ui, sans-serif",
+    borderRadius: "0.875rem",
+  },
+  elements: {
+    card: "bg-white dark:bg-[#0e111a] border border-slate-200 dark:border-white/10 shadow-2xl rounded-[2rem] overflow-hidden",
+    modalContent: "!bg-transparent !border-0 !shadow-none",
+    modalBackdrop: "bg-slate-900/40 dark:bg-black/70 backdrop-blur-md",
+    navbar: "bg-slate-50 dark:bg-[#0a0d14] border-r border-slate-200 dark:border-white/10 rounded-l-[2rem]",
+    headerTitle: "text-slate-900 dark:text-white font-bold text-lg tracking-tight",
+    headerSubtitle: "text-slate-500 dark:text-slate-400 text-xs",
+    formButtonPrimary:
+      "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-purple-600/30 transition-all text-xs py-2.5 active:scale-[0.98] border-0",
+    formFieldInput:
+      "bg-white dark:bg-[#07090e] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 text-xs py-2.5 px-3 transition-all",
+    formFieldLabel: "text-slate-700 dark:text-slate-300 font-semibold text-xs mb-1",
+    socialButtonsBlockButton:
+      "bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-white/10 hover:border-purple-500/40 rounded-xl transition-all text-xs font-semibold shadow-sm py-2.5",
+    socialButtonsBlockButtonText: "text-slate-700 dark:text-slate-100 font-semibold text-xs",
+    dividerLine: "bg-slate-200 dark:bg-white/10",
+    dividerText: "text-slate-500 text-[11px] uppercase tracking-wider font-semibold",
+    footerActionLink: "text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-bold transition-colors",
+    footerActionText: "text-slate-500 dark:text-slate-400 text-xs",
+    navbarFooter: "!hidden hidden h-0 p-0 m-0 border-0 opacity-0 overflow-hidden pointer-events-none",
+    userProfileNavbarFooter: "!hidden hidden h-0 p-0 m-0 border-0 opacity-0 overflow-hidden pointer-events-none",
+    footer: "!hidden hidden h-0 p-0 m-0 border-0 opacity-0 overflow-hidden pointer-events-none",
+    footerPages: "!hidden hidden h-0 p-0 m-0 border-0 opacity-0 overflow-hidden pointer-events-none",
+    footerPagesLink: "!hidden hidden h-0 p-0 m-0 border-0 opacity-0 overflow-hidden pointer-events-none",
+    userButtonPopoverRootBox: "rounded-[2rem] overflow-hidden shadow-2xl",
+    userButtonPopoverCard: "bg-white dark:bg-[#0e111a] border border-slate-200 dark:border-white/10 shadow-2xl rounded-[2rem] p-2",
+    userButtonPopoverFooter: "!hidden hidden h-0 p-0 m-0 border-0 opacity-0 overflow-hidden",
+  },
+};
