@@ -1,69 +1,120 @@
-import Image from "next/image";
+import React from "react";
+import { LandingNavbar } from "@/components/landing/LandingNavbar";
+import { HeroSection } from "@/components/landing/HeroSection";
+import { ProblemVsSolution } from "@/components/landing/ProblemVsSolution";
+import { HowItWorks } from "@/components/landing/HowItWorks";
+import { SceneExplorer } from "@/components/landing/SceneExplorer";
+import { ShowcaseGallery } from "@/components/landing/ShowcaseGallery";
+import { EnterpriseTrust } from "@/components/landing/EnterpriseTrust";
+import { FeatureHighlights } from "@/components/landing/FeatureHighlights";
+import { FAQSection } from "@/components/landing/FAQSection";
+import { LandingCTA } from "@/components/landing/LandingCTA";
+import { LandingFooter } from "@/components/landing/LandingFooter";
 
-export default function Home() {
+export default function HomePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://prmovie.dev/#website",
+        "url": "https://prmovie.dev",
+        "name": "PR Movie",
+        "description": "Developer review accelerator and architectural execution flow copilot for GitHub pull requests.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "PR Movie",
+          "url": "https://prmovie.dev"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://prmovie.dev/#software",
+        "name": "PR Movie",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Transforms complex 40-file code diffs into animated, evidence-backed 6-scene storyboards with architecture flow diagrams and 100% verified GitHub line citations.",
+        "featureList": [
+          "Architecture & Data Flow Mapping",
+          "Guided Cognitive Review Order",
+          "Signal vs Noise Blast Radius Filtering",
+          "100% Verified Line-Level Evidence Citations",
+          "Zero-Storage Memory Execution"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://prmovie.dev/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is PR Movie just a presentation or does it actually help me review code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "PR Movie is an active developer review accelerator. Rather than forcing you to click between 40 files in alphabetical order and reconstruct architecture in your head, it gives you the data flow mental model, isolates business logic from noise, and provides 1-click verifiable diff links to GitHub."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does PR Movie guarantee accuracy with zero AI hallucinations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Every single diagram node, summary bullet, and code excerpt is built strictly from your actual GitHub diff lines and repository AST. We enforce evidence-only rules: if a claim cannot be verified against a line number in the PR, it is rejected."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my private code safe and secure?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. PR Movie uses a zero-storage memory execution model. Code diffs are processed in temporary memory to generate the movie and are never saved to disk or persistent databases. Your code is never used to train machine learning models."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does it handle massive 50+ file PRs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "PR Movie automatically filters out lockfiles, generated assets, and boilerplate. It spotlights the core files that actually mutated business logic, APIs, and state."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to install any CLI or local dependencies?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Everything runs directly in your web browser. Just paste any public or authorized GitHub pull request URL to generate and inspect the PR Movie immediately."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen bg-slate-50 dark:bg-[#07090e] text-slate-900 dark:text-slate-100 flex flex-col justify-between selection:bg-purple-600 selection:text-white transition-colors duration-200">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <LandingNavbar />
+      <main className="flex-1 flex flex-col items-center w-full">
+        <HeroSection />
+        <ProblemVsSolution />
+        <HowItWorks />
+        <SceneExplorer />
+        <ShowcaseGallery />
+        <EnterpriseTrust />
+        <FeatureHighlights />
+        <FAQSection />
+        <LandingCTA />
       </main>
+      <LandingFooter />
     </div>
   );
 }
