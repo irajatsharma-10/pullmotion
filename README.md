@@ -2,9 +2,9 @@
 
 # PullMotion
 
-**Turn 40-file pull requests into animated, 6-scene review storyboards.**
+### The Visual Pull Request Studio & Architectural Review Accelerator
 
-Code review shouldn't feel like reconstructing an architectural blueprint from a pile of scattered bricks.
+Turn complex multi-file pull requests into interactive, evidence-backed review storyboards.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.3-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
@@ -16,87 +16,98 @@ Code review shouldn't feel like reconstructing an architectural blueprint from a
 [![Vitest](https://img.shields.io/badge/Tests-69_Passed-brightgreen?style=flat-square&logo=vitest)](https://vitest.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-[Live Demo](https://pullmotion.dev) · [How It Works](#how-it-works) · [The 6-Scene Storyboard](#the-6-scene-storyboard) · [Quickstart](#quickstart)
+[Live Demo](https://pullmotion.dev) &bull; [Overview](#overview) &bull; [Architecture](#architecture) &bull; [Review Framework](#the-6-scene-review-framework) &bull; [Capabilities](#key-capabilities) &bull; [Quickstart](#getting-started) &bull; [Configuration](#configuration)
 
 </div>
 
 ---
 
-## The Problem
+## Overview
 
-You open a GitHub pull request with 47 changed files.
+Modern code review is bottlenecked by cognitive fragmentation. In large pull requests, GitHub displays files in alphabetical order, forcing reviewers to manually reconstruct dependency graphs, trace data flows across layers, and distinguish critical logic from routine boilerplate.
 
-GitHub sorts them alphabetically: an auto-generated type file first, a stylesheet second, a database migration in the middle, and the core business logic at the very bottom. You spend 45 minutes clicking back and forth between tabs, reconstructing the call chain in your head, and trying to figure out what actually changed.
+**PullMotion** resolves this by introducing a deterministic static analysis and visualization pipeline:
 
-We built **PullMotion** to fix that.
-
-PullMotion analyzes the entire pull request, maps the execution flow, filters out boilerplate churn, and presents the diff as a **guided 6-scene storyboard**. Every claim and diagram node links directly to exact line numbers in the GitHub diff.
+- **Dependency-First Reviewing**: Sequences diffs in topological execution order (Schema &rarr; Core Logic &rarr; API Endpoints &rarr; UI &rarr; Tests) rather than alphabetical order.
+- **100% Line-Level Citations**: Every claim, diagram node, and code snippet links directly to line numbers in the GitHub diff.
+- **Deterministic Hallucination Firewall**: Validates generated storyboards against AST symbol extractions, automatically rejecting phantom infrastructure or ungrounded assertions.
+- **Zero-Storage Architecture**: Processes diffs purely in ephemeral memory with zero persistence of repository source code.
 
 ---
 
-## How It Works
+## Architecture
 
-PullMotion doesn't just send raw diffs to an LLM. It runs a deterministic static analysis pipeline first: parsing AST symbols across 11+ languages, computing topological dependencies, scoring blast radius, and building an intermediate review model (`PRReviewModel`). When the AI generates a storyboard, our validation firewall deterministically verifies every referenced file, symbol, and line citation against the AST before rendering.
+PullMotion couples lightweight static analysis with a multi-key AI orchestration layer and a deterministic validation gate:
 
 ```mermaid
 flowchart LR
-    A[GitHub PR URL] --> B[Octokit Fetcher\nDiffs & Patches]
-    B --> C[Polyglot AST &\nDependency Graph]
-    C --> D[Review Model (IR)\nBlast Radius & Risks]
-    D --> E[Multi-Key LLM Pool\nGemini / OpenAI]
-    E --> F[Hallucination Firewall\nAST Verification]
-    F --> G[🎬 Interactive Studio\nTimeline & Diffs]
+    A[GitHub PR URL] --> B[Octokit Fetcher\nUnified Diffs & Patches]
+    B --> C[Polyglot Lexical Scanner\nAST Symbols & Contracts]
+    C --> D[Topological Dependency Graph\nBlast Radius & Priorities]
+    D --> E[Canonical PRReviewModel\nStructured Review IR]
+    E --> F[Multi-Key LLM Pool\nGemini / OpenAI]
+    F --> G[Deterministic Firewall\nAST Grounding & Schema]
+    G --> H[Interactive Studio\nTimeline & Evidence Drawer]
 ```
+
+### Pipeline Lifecycle
+
+1. **Ingestion & Cache Verification**: Calculates a SHA-256 source hash across repository coordinates, pull number, and commit `headSha`. Cached records in PostgreSQL/Upstash are returned instantly.
+2. **Polyglot Lexical Parsing**: Scans diffs across 11+ languages to extract functions, classes, structs, interfaces, imports, exports, and invariant shifts.
+3. **Blast Radius & Priority Scoring**: Classifies files into `HIGH`, `MEDIUM`, and `LOW` review priorities based on architectural criticality (e.g., auth, migrations, breaking APIs).
+4. **4-State Test Evaluation**: Distinguishes between `TEST_EXISTS`, `TEST_MISSING`, `TEST_NOT_ANALYZED`, and `TEST_UNAVAILABLE` to preserve epistemological certainty.
+5. **Grounded AI Generation**: Compiles the `PRReviewModel` into structured storyboard scenes using low-temperature LLM generation with multi-key failover.
+6. **Deterministic Validation Gate**: Rejects unbacked infrastructure keywords, regex-filters fabricated performance metrics, verifies line ranges, and executes automated self-healing if needed.
 
 ---
 
-## The 6-Scene Storyboard
+## The 6-Scene Review Framework
 
-Every pull request is automatically compiled into a structured 6-stage review experience:
+PullMotion synthesizes code changes into a standardized 6-stage narrative:
 
-| # | Scene | Value |
+| # | Scene | Reviewer Deliverables |
 |:---:|:---|:---|
 | **1** | **Executive Overview** | Problem statement, PR metrics, architectural impact summary, and contract verdict. |
-| **2** | **Architecture & Data Flow** | Interactive Before/After node-edge diagram comparing system topologies. |
-| **3** | **Code Walkthrough** | Reviewer-prioritized diffs (High/Med/Low), symbol shifts, invariant changes, and watch-outs. |
-| **4** | **Domain Breakdown** | Categorized matrix across features, APIs, schemas, configs, and tests. |
-| **5** | **File Manifest** | Complete file catalog with additions, deletions, and risk levels. |
-| **6** | **Action Plan & Checklist** | Evidence-backed assertions (facts, risks, questions) with an automated review checklist. |
+| **2** | **Architecture & Data Flow** | Interactive Before/After node-edge diagrams mapping client, API, service, and database interactions. |
+| **3** | **Code Walkthrough** | Prioritized diff walkthrough (High/Med/Low) with symbol shifts, invariant changes, and watch-outs. |
+| **4** | **Domain Breakdown** | Categorized change matrix across features, APIs, database schemas, configurations, and tests. |
+| **5** | **File Manifest** | Complete catalog of affected files with addition/deletion counts and risk ratings. |
+| **6** | **Action Plan & Checklist** | Evidence-grounded assertions (facts, risks, questions) paired with an automated verification checklist. |
 
 ---
 
 ## Key Capabilities
 
-### 🔬 Deterministic Static Analysis
-- **Polyglot Symbol Extraction**: Lexical AST parsing across TypeScript, JavaScript, Python, Go, Rust, Java, Kotlin, C#, C++, Ruby, and SQL.
-- **Topological Review Ordering**: Diffs are sequenced in logical dependency order (Schema → Core Logic → Endpoints → UI → Tests) instead of alphabetical sorting.
-- **4-State Test Matrix**: Intelligently classifies test coverage as `TEST_EXISTS`, `TEST_MISSING`, `TEST_NOT_ANALYZED`, or `TEST_UNAVAILABLE` to eliminate false negatives.
+### Deterministic Static Analysis
+- **Polyglot Symbol Extraction**: Fast lexical scanning for TypeScript, JavaScript, Python, Go, Rust, Java, Kotlin, C#, C++, Ruby, and SQL.
+- **Topological Ordering**: Reconstructs true call chains so reviewers evaluate root dependencies before dependent UI components.
+- **Signal vs. Noise Separation**: Automatically isolates business logic from lockfiles, minified bundles, and generated artifacts.
 
-### 🛡️ Zero-Hallucination Firewall
-- **AST Grounding**: Validates that every file, function, and snippet cited by the AI actually exists in the PR.
-- **Anti-Fabrication Filters**: Regex engines automatically reject ungrounded performance claims (*"improves speed by 40%"*) and phantom infrastructure (*Kafka, Redis, Kubernetes*) unless present in the codebase.
-- **Self-Healing Retry Loop**: Any schema or semantic failure automatically triggers a targeted 1-step repair prompt.
+### Validation Firewall & Grounding
+- **AST Cross-Referencing**: Ensures every file, symbol, and code snippet cited in the storyboard exists in the source diff.
+- **Anti-Hallucination Regex Engine**: Automatically rejects fabricated performance claims (*"reduces latency by 40%"*) and phantom services unless present in commit metadata.
+- **1-Step Self-Healing Loop**: Feeds validation diagnostics back to the LLM for immediate schema and semantic correction.
 
-### 🎬 Studio Review Workspace
-- **Sub-Millisecond Timeline**: Smooth playback powered by `requestAnimationFrame` with 1x, 1.5x, and 2x speed multipliers.
-- **Fullscreen Presentation Mode**: Built for team standups, sprint reviews, and architecture syncs with keyboard hotkeys (<kbd>Space</kbd>, <kbd>←</kbd>, <kbd>→</kbd>, <kbd>Esc</kbd>).
-- **Line-Level Citations**: Click any node or assertion to open the evidence drawer with 1-click links to GitHub diff lines.
-- **5 Accent Themes**: Purple, Blue, Teal, Amber, and Pink with full dark and light mode support.
+### Studio Playback Engine
+- **Sub-Millisecond Timeline**: Synchronized playback powered by a `requestAnimationFrame` loop with 1x, 1.5x, and 2x speed multipliers.
+- **Presentation Overlay**: Fullscreen presentation mode with keyboard navigation (<kbd>Space</kbd>, <kbd>&larr;</kbd>, <kbd>&rarr;</kbd>, <kbd>Esc</kbd>) for team reviews.
+- **Evidence Drawer**: Slide-out panel providing direct 1-click links to GitHub diff line numbers.
+- **Accent Theming**: 5 studio color palettes (Purple, Blue, Teal, Amber, Pink) with full dark and light mode support.
 
-### ⚡ Infrastructure & Privacy
-- **Multi-Key Failover Pool**: Automatic round-robin cycling and failover across Google Gemini and OpenAI keys.
+### High Availability & Security
+- **Multi-Key Failover**: Round-robin pooling and automatic failover across Google Gemini (`gemini-2.0-flash`, `gemini-1.5-flash`) and OpenAI (`gpt-4o`).
 - **Two-Tier Caching**: High-speed Upstash Redis caching for PR diffs and PostgreSQL persistence for generated storyboards.
-- **Zero-Storage Privacy**: Diffs are processed strictly in ephemeral RAM and never persisted to disk or used for AI training.
+- **Zero-Storage Guarantee**: Ephemeral processing ensures repository code is never persisted to disk or used for model training.
 
 ---
 
-## Quickstart
+## Getting Started
 
 ### Prerequisites
-- Node.js >= 20
-- PostgreSQL >= 15
+- Node.js &gt;= 20.0.0
+- PostgreSQL &gt;= 15.0
 - GitHub Personal Access Token (`public_repo` scope)
-- Upstash Redis & Clerk accounts
+- Upstash Redis &amp; Clerk accounts
 
 ### 1. Clone & Install
 ```bash
@@ -110,46 +121,62 @@ npm install
 cp .env.example .env
 ```
 
-Add your credentials to `.env`:
-```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/prmovie"
-GITHUB_TOKEN="ghp_your_token_here"
-GEMINI_API_KEYS="AIzaSyA...,AIzaSyB..."
-UPSTASH_REDIS_REST_URL="https://your-instance.upstash.io"
-UPSTASH_REDIS_REST_TOKEN="your_token"
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
-CLERK_SECRET_KEY="sk_test_..."
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
+Edit `.env` and provide your credentials (see [Configuration](#configuration)).
 
-### 3. Initialize & Run
+### 3. Initialize Database & Start Server
 ```bash
 npm run contract:emit
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to start reviewing.
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Testing
+## Configuration
+
+| Parameter | Required | Description | Example |
+|:---|:---:|:---|:---|
+| `DATABASE_URL` | Yes | PostgreSQL connection string | `postgresql://user:pass@localhost:5432/prmovie` |
+| `GITHUB_TOKEN` | Yes | GitHub Personal Access Token (5,000 req/hr) | `ghp_xxxxxxxxxxxxxxxxxxxx` |
+| `GEMINI_API_KEYS` | Yes | Comma-separated Gemini API keys for failover | `AIzaSyA...,AIzaSyB...` |
+| `OPENAI_API_KEYS` | Optional | Comma-separated OpenAI API keys for fallback | `sk-proj-xxxxxxxxxxxx` |
+| `UPSTASH_REDIS_REST_URL` | Yes | Upstash Redis REST endpoint URL | `https://your-instance.upstash.io` |
+| `UPSTASH_REDIS_REST_TOKEN` | Yes | Upstash Redis REST token | `your_upstash_token` |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Yes | Clerk publishable key | `pk_test_xxxxxxxxxxxxxxxx` |
+| `CLERK_SECRET_KEY` | Yes | Clerk secret key | `sk_test_xxxxxxxxxxxxxxxx` |
+| `NEXT_PUBLIC_APP_URL` | Yes | Public application URL | `http://localhost:3000` |
+
+---
+
+## Testing & Quality Assurance
+
+PullMotion includes 18 unit and integration test suites:
 
 ```bash
-# Run unit & integration test suites (69 tests)
+# Execute test suite (69 tests)
 npm test
 
 # Run tests in watch mode
 npm run test:watch
 ```
 
+### Coverage Scope
+- **Polyglot AST Scanners**: Syntax parsing across 11+ programming languages.
+- **Topological Dependency Graph**: Acyclic traversal and symbol resolution.
+- **Hallucination Firewall**: Rejection of uncited infrastructure keywords and phantom metrics.
+- **Playback Controls**: RequestAnimationFrame stepping, boundary clamping, and hotkey listeners.
+
 ---
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router), React 19, TypeScript 5, Tailwind CSS v4, Motion
-- **Database & Cache**: Prisma 8, PostgreSQL, Upstash Redis
-- **Auth & Ingestion**: Clerk, Octokit (with retry and throttle plugins)
-- **AI Engine**: Google Gemini (2.0 Flash / 1.5 Flash), OpenAI (GPT-4o), Zod
+- **Frontend**: [Next.js 16](https://nextjs.org) (App Router), [React 19](https://react.dev), [Tailwind CSS v4](https://tailwindcss.com), [Motion](https://motion.dev)
+- **Database & Cache**: [Prisma 8](https://www.prisma.io), [PostgreSQL](https://www.postgresql.org), [Upstash Redis](https://upstash.com)
+- **Authentication**: [Clerk](https://clerk.com)
+- **GitHub Integration**: [Octokit](https://github.com/octokit) (with retry and throttle plugins)
+- **AI Engine**: Google Gemini (2.0 Flash / 1.5 Flash), OpenAI (GPT-4o), [Zod](https://zod.dev)
+- **Testing**: [Vitest](https://vitest.dev)
 
 ---
 
@@ -159,7 +186,7 @@ Distributed under the [MIT License](LICENSE).
 
 <div align="center">
 
-Built for engineers who respect their own time.<br/>
+Built for engineering teams that prioritize thorough, efficient, and architectural code reviews.<br/>
 **[pullmotion.dev](https://pullmotion.dev)**
 
 </div>
