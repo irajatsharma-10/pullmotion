@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🎬 PR Movie
+# ⚡ PullMotion
 
-**Transform any GitHub Pull Request into an interactive, visual, story-driven code review experience.**
+### Transform complex GitHub Pull Requests into interactive, visual code reviews.
 
-Reconstruct complex 40+ file pull requests into animated, evidence-backed **6-scene storyboards** that map architecture, data flow, breaking changes, and risk — giving reviewers a crystal-clear mental model in seconds.
+Reconstruct 40+ file pull requests into animated, evidence-backed **6-scene storyboards** that map architecture, execution flow, breaking changes, and risk — giving reviewers a crystal-clear mental model in seconds.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.3.1-black?logo=next.js&style=flat-square)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.8-61dafb?logo=react&style=flat-square)](https://react.dev)
@@ -17,7 +17,7 @@ Reconstruct complex 40+ file pull requests into animated, evidence-backed **6-sc
 [![Vitest](https://img.shields.io/badge/Testing-Vitest_4.x-fcc72b?logo=vitest&style=flat-square)](https://vitest.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-[Live Demo](https://prmovie.dev) · [System Architecture](#-system-architecture--flowcharts) · [6-Scene Storyboard](#-the-6-scene-storyboard-framework) · [API Reference](#-api-reference) · [Quickstart](#-getting-started)
+[Live Demo](https://pullmotion.dev) · [System Architecture](#-system-architecture) · [6-Scene Framework](#-the-6-scene-storyboard-framework) · [API Reference](#-api-reference) · [Quickstart](#-quickstart)
 
 </div>
 
@@ -25,97 +25,87 @@ Reconstruct complex 40+ file pull requests into animated, evidence-backed **6-sc
 
 ## 📑 Table of Contents
 
-- [🔍 What is PR Movie?](#-what-is-pr-movie)
-  - [The Cognitive Review Problem](#the-cognitive-review-problem)
-  - [The PR Movie Solution](#the-pr-movie-solution)
+- [🔍 Overview](#-overview)
+  - [The Code Review Problem](#the-code-review-problem)
+  - [The PullMotion Solution](#the-pullmotion-solution)
 - [🎬 The 6-Scene Storyboard Framework](#-the-6-scene-storyboard-framework)
-- [🏗️ System Architecture & Flowcharts](#-system-architecture--flowcharts)
+- [🏗️ System Architecture](#-system-architecture)
   - [High-Level Architecture](#high-level-architecture)
-  - [End-to-End Generation Lifecycle](#end-to-end-generation-lifecycle)
+  - [End-to-End Generation Flow](#end-to-end-generation-flow)
   - [Hallucination Firewall & Self-Healing Loop](#hallucination-firewall--self-healing-loop)
-  - [Reviewer Cognitive Prioritization Pipeline](#reviewer-cognitive-prioritization-pipeline)
-- [⚡ Key Features & Capabilities](#-key-features--capabilities)
+  - [Reviewer Cognitive Prioritization](#reviewer-cognitive-prioritization)
+- [✨ Core Capabilities](#-core-capabilities)
 - [🔬 Static Analysis & Polyglot Engine](#-static-analysis--polyglot-engine)
 - [🤖 AI Story Engine & Failover Matrix](#-ai-story-engine--failover-matrix)
 - [🎨 Studio Workspace & Presentation Mode](#-studio-workspace--presentation-mode)
 - [🛠️ Tech Stack](#️-tech-stack)
 - [📂 Project Structure](#-project-structure)
-- [🚀 Getting Started](#-getting-started)
+- [🚀 Quickstart](#-quickstart)
   - [Prerequisites](#prerequisites)
-  - [Installation Steps](#installation-steps)
+  - [Installation & Setup](#installation--setup)
 - [🔐 Environment Variables](#-environment-variables)
-- [🗄️ Database Schema (Prisma 8)](#️-database-schema-prisma-8)
+- [🗄️ Database Schema](#️-database-schema)
 - [📡 API Reference](#-api-reference)
 - [🧪 Testing & Quality Assurance](#-testing--quality-assurance)
 - [🛡️ Security, Privacy & Zero-Storage Policy](#️-security-privacy--zero-storage-policy)
-- [⌨️ Keyboard Shortcuts & Studio Controls](#️-keyboard-shortcuts--studio-controls)
+- [⌨️ Studio Keyboard Shortcuts](#️-studio-keyboard-shortcuts)
 - [🤝 Contributing](#-contributing)
 - [📜 License](#-license)
 
 ---
 
-## 🔍 What is PR Movie?
+## 🔍 Overview
 
-PR Movie is an **automated, evidence-grounded code review accelerator**. It ingests raw GitHub pull request diffs, performs deterministic polyglot AST and dependency analysis, and synthesizes an interactive **6-scene cinematic presentation** that walks developers through changes in the exact order their brain needs to evaluate them.
+**PullMotion** is an active developer review accelerator. It ingests raw GitHub pull request diffs, executes deterministic polyglot AST and dependency analysis, and synthesizes an interactive **6-scene cinematic presentation** that walks engineers through changes in the exact order needed to evaluate architectural soundness.
 
-### The Cognitive Review Problem
+### The Code Review Problem
 
-Traditional code reviews suffer from fundamental cognitive friction:
+Modern code review is bottlenecked by cognitive overload:
 
-1. **Alphabetical File Ordering**: Pull requests are sorted alphabetically (`a/config.ts`, `b/models.ts`, `z/view.tsx`), forcing reviewers to jump haphazardly across files instead of following logical data flows.
-2. **Signal vs. Noise Fatigue**: Large PRs mix critical business logic with lockfile updates, build manifests, auto-generated code, and refactor churn.
-3. **Missing Blast Radius**: Reviewers must mentally construct the call graph and guess which downstream services, database tables, or endpoints are affected.
-4. **AI Hallucination Risk**: Generic AI code review tools frequently fabricate non-existent services, hallucinate file paths, or invent phantom security vulnerabilities.
+1. **Alphabetical File Sorting**: Pull requests display files in alphabetical order (`a/config.ts`, `b/models.ts`, `z/view.tsx`), forcing reviewers to jump aimlessly across files rather than following logical data flow.
+2. **Signal vs. Noise Fatigue**: Large PRs bury critical business logic beneath lockfile updates, schema migrations, generated types, and boilerplate formatting.
+3. **Invisible Blast Radius**: Reviewers must manually reconstruct the call graph in their head to determine which downstream services, database tables, or endpoints are affected.
+4. **AI Hallucination Risk**: Generic AI code review bots frequently fabricate non-existent services, hallucinate file paths, or invent phantom security vulnerabilities.
 
-### The PR Movie Solution
+### The PullMotion Solution
 
-PR Movie solves this with a **deterministic analysis layer paired with a strict validation firewall**:
+PullMotion combines **deterministic static analysis with a strict validation firewall**:
 
-- **Cognitive Review Order**: Changes are sequenced by architectural dependency (Database Schema → Core Service Logic → API Endpoints → Client UI → Test Suite).
-- **100% Line-Level Evidence Citations**: Every node, claim, and assertion links directly to exact line numbers in the GitHub diff.
-- **Zero Hallucination Firewall**: Every LLM-generated storyboard is parsed against a strict Zod schema and verified deterministically against the AST. Any invalid claims trigger an automated self-healing feedback loop.
-- **Zero-Storage Architecture**: Diffs and code contents are processed purely in ephemeral memory and never persisted to disk or retained for model training.
+- **Cognitive Review Order**: Re-orders diffs by architectural dependency (Database Schema → Core Services → API Endpoints → Client UI → Tests).
+- **100% Line-Level Evidence Citations**: Every node, assertion, and snippet links directly to exact line numbers in the GitHub diff.
+- **Zero Hallucination Firewall**: Storyboards are validated against strict Zod schemas and verified deterministically against AST extractions. Any invalid claims trigger an automated self-healing feedback loop.
+- **Zero-Storage Architecture**: Diffs and code contents are processed purely in ephemeral RAM and never persisted to disk or retained for model training.
 
 ---
 
 ## 🎬 The 6-Scene Storyboard Framework
 
-Every generated PR Movie follows an intuitive 6-stage narrative structure engineered specifically for software reviewers:
+PullMotion organizes review intelligence into a standardized 6-stage narrative:
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                            PR MOVIE STORYBOARD                              │
-├─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬───────┤
-│   SCENE 1   │   SCENE 2   │   SCENE 3   │   SCENE 4   │   SCENE 5   │SCENE 6│
-│  Overview   │ Before/After│Code Changes │  Breakdown  │Files Changed│Summary│
-│ & Contract  │ Architecture│ Walkthrough │  by Domain  │   Matrix    │& Action│
-└─────────────┴─────────────┴─────────────┴─────────────┴─────────────┴───────┘
-```
-
-| Scene # | Stage Name | Description | Key Elements Provided |
+| Scene | Name | Description | Key Reviewer Deliverables |
 |:---:|:---|:---|:---|
-| **1** | **Overview & Architectural Impact** | High-level PR executive summary, problem statement, and architectural verdict. | Pull request author, diff stats (+/- lines, commit count), problem statement, contract verdict, and architectural impact summary. |
-| **2** | **Before & After Architecture** | Interactive dual node-edge topology diagram comparing the pre-PR system vs. post-PR system. | Visual service nodes (Client, API, Service, Database, Cache, Queue), animated data flow edges, added/modified/removed node tags, step-by-step lifecycle comparisons. |
-| **3** | **Reviewer-Prioritized Code Changes** | Guided inspection of critical code modifications ordered by cognitive importance. | Language-highlighted code snippets (before & after diffs), affected symbols (classes/functions/methods), invariant changes, security-sensitive flags, design rationale, and reviewer watch-outs. |
+| **1** | **Overview & Architectural Impact** | High-level PR executive summary, problem statement, and architectural verdict. | PR author, diff statistics (+/- lines, commits), problem statement, contract verdict, and architectural impact summary. |
+| **2** | **Before & After Architecture** | Dual node-edge topology comparing pre-PR vs. post-PR system states. | Visual service nodes (Client, API, Service, Database, Cache, Queue), animated data flow edges, added/modified tags, step-by-step lifecycle comparisons. |
+| **3** | **Reviewer-Prioritized Code Changes** | Guided inspection of critical code modifications ordered by cognitive importance. | Syntax-highlighted before/after snippets, affected symbols (classes, functions, methods), invariant changes, security flags, design rationale, and reviewer watch-outs. |
 | **4** | **Categorized Change Breakdown** | Granular matrix of changes categorized by architectural domain. | Category groups (Feature, Dependency, API Contract, Database Schema, Tests, Config, Refactor), file count, impact severity, and domain risk level. |
-| **5** | **Files Changed & Status Matrix** | Comprehensive catalog of all affected files with status indicators. | Additions, deletions, file status (`added`, `modified`, `removed`, `renamed`), reviewer priority tag (`HIGH`, `MEDIUM`, `LOW`), and security indicators. |
+| **5** | **Files Changed & Status Matrix** | Comprehensive catalog of all affected files with status indicators. | Additions, deletions, file status (`added`, `modified`, `removed`, `renamed`), reviewer priority tag (`HIGH`, `MEDIUM`, `LOW`), and security badges. |
 | **6** | **Executive Summary & Reviewer Checklist** | Actionable review synthesis with evidence-backed findings and next steps. | Evidence-backed assertions (tagged as `FACT`, `INFERENCE`, `RISK`, `QUESTION`), confidence ratings, reviewer verification checklist, validation verdict, and risk analysis. |
 
 ---
 
-## 🏗️ System Architecture & Flowcharts
+## 🏗️ System Architecture
 
 ### High-Level Architecture
 
-PR Movie is built on a modern Next.js App Router architecture, orchestrating static AST parsers, Upstash Redis caching, PostgreSQL persistence via Prisma 8, and a resilient multi-provider LLM pipeline:
+PullMotion is built on a Next.js App Router architecture, orchestrating static AST parsers, Upstash Redis caching, PostgreSQL persistence via Prisma 8, and a multi-provider LLM pipeline:
 
 ```mermaid
 flowchart TB
     subgraph Client ["Client Layer (Browser)"]
-        UI["Landing Page / Create View"]
+        UI["Landing Page & PR Input"]
         Studio["Studio Workspace & Timeline"]
         PresOverlay["Presentation Overlay (Fullscreen)"]
-        Evidence["Line-Level Evidence Panel"]
+        Evidence["Line-Level Evidence Drawer"]
     end
 
     subgraph Edge ["Edge & API Layer (Next.js App Router)"]
@@ -134,7 +124,7 @@ flowchart TB
         ReviewBuilder["Canonical PRReviewModel Assembler"]
     end
 
-    subgraph AIOrchestrator ["AI Story Engine & Hallucination Firewall"]
+    subgraph AIOrchestrator ["AI Story Engine & Validation Firewall"]
         MultiKey["Multi-Key Pool & Failover Manager"]
         GeminiAPI["Google Gemini (2.0 Flash / 1.5 Flash)"]
         OpenAIAPI["OpenAI API (GPT-4o)"]
@@ -184,58 +174,56 @@ flowchart TB
 
 ---
 
-### End-to-End Generation Lifecycle
-
-The full lifecycle from entering a GitHub Pull Request URL to rendering the 6-scene storyboard in the Studio workspace:
+### End-to-End Generation Flow
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as Developer / Reviewer
+    actor Reviewer as Developer / Reviewer
     participant Web as Web Client (Studio)
     participant API as /api/movies Endpoint
     participant Rate as Upstash Rate Limiter
-    participant DB as Prisma 8 / Postgres
+    participant DB as Prisma 8 / PostgreSQL
     participant GH as GitHub API (Octokit)
-    participant Engine as Static Analysis & AST
+    participant Engine as Static AST & Graph Engine
     participant AI as Multi-Key LLM Pool
     participant Firewall as Semantic Firewall
 
-    User->>Web: Enter GitHub PR URL
+    Reviewer->>Web: Submit GitHub Pull Request URL
     Web->>API: POST /api/movies { url }
-    API->>Rate: Check client IP quota (15 req / 10 min)
+    API->>Rate: Verify client IP rate limit quota
     Rate-->>API: Quota Allowed
 
     API->>Engine: Compute Deterministic SourceHash
     API->>DB: Query Movie by sourceHash
-    alt Movie Already Exists in Database
+    alt Storyboard Cached in Database
         DB-->>API: Return Cached PRMovie
         API-->>Web: { success: true, cached: true, movie }
-        Web-->>User: Instant Playback in Studio Workspace
-    else Movie Not Cached
-        API->>GH: Fetch PR details, commits, files & patches
+        Web-->>Reviewer: Instant Studio Playback
+    else Storyboard Needs Generation
+        API->>GH: Fetch PR details, commits, files & unified diffs
         GH-->>API: PRData (HeadSha, Diffs, Patches)
         
         API->>Engine: Scan AST Symbols & Build Dependency Graph
-        API->>Engine: Assess Blast Radius, Security & 4-State Tests
+        API->>Engine: Evaluate Blast Radius, Security & 4-State Tests
         Engine-->>API: Canonical PRReviewModel
 
         API->>AI: Generate Storyboard (Grounded on PRReviewModel)
         AI-->>API: Candidate JSON Storyboard
         
-        API->>Firewall: Validate Zod Schema & Semantic Citations
+        API->>Firewall: Validate Zod Schema & Semantic AST Citations
         alt Validation Passes
             Firewall-->>API: Validated PRMovie
         else Validation Fails (Semantic Mismatch)
-            API->>AI: Self-Healing Prompt with Concrete Errors
+            API->>AI: Targeted Self-Healing Prompt with Concrete Errors
             AI-->>API: Corrected JSON Storyboard
             API->>Firewall: Re-validate Storyboard
         end
 
-        API->>DB: Save Movie & CachedPR records
+        API->>DB: Persist Movie & CachedPR records
         DB-->>API: Persisted
         API-->>Web: { success: true, cached: false, movie }
-        Web-->>User: Animate Storyboard in Studio Timeline
+        Web-->>Reviewer: Render Storyboard in Studio Timeline
     end
 ```
 
@@ -243,21 +231,19 @@ sequenceDiagram
 
 ### Hallucination Firewall & Self-Healing Loop
 
-To guarantee zero hallucinations and ensure every node and claim maps to verified GitHub code:
-
 ```mermaid
 flowchart TD
-    RawOutput["Raw LLM JSON Output"] --> Sanitize["Strip Markdown Code Fences & Whitespace"]
+    RawOutput["Raw LLM JSON Output"] --> Sanitize["Sanitize Markdown Fences & Whitespace"]
     Sanitize --> JSONParse{"JSON.parse() Valid?"}
-    JSONParse -- No --> ErrorDetails1["Collect Syntax Error Details"]
-    JSONParse -- Yes --> ZodCheck{"Zod Schema Validation (PRMovieSchema)"}
+    JSONParse -- No --> ErrorDetails1["Collect JSON Syntax Errors"]
+    JSONParse -- Yes --> ZodCheck{"Zod Schema Validation"}
     
     ZodCheck -- Failed --> ErrorDetails2["Extract Zod Issue Paths & Messages"]
     ZodCheck -- Passed --> SemanticCheck{"Deterministic Semantic Firewall (validatePRMovie)"}
     
     SemanticCheck -- "Unknown Files / Phantom Services" --> ErrorDetails3["Collect Hallucination Violations"]
-    SemanticCheck -- "100% Grounded" --> UniqueIDs["Ensure Unique Scene IDs & Normalized Timing"]
-    UniqueIDs --> Persist["Persist to Database & Deliver to Reviewer"]
+    SemanticCheck -- "100% Grounded" --> UniqueIDs["Ensure Unique Scene IDs & Normalized Timings"]
+    UniqueIDs --> Persist["Persist to PostgreSQL & Deliver to Studio"]
 
     ErrorDetails1 --> HealingPrompt["Construct Automated Self-Healing Prompt"]
     ErrorDetails2 --> HealingPrompt
@@ -269,9 +255,7 @@ flowchart TD
 
 ---
 
-### Reviewer Cognitive Prioritization Pipeline
-
-How PR Movie classifies, prioritizes, and organizes diffs for maximum reviewer efficiency:
+### Reviewer Cognitive Prioritization
 
 ```mermaid
 flowchart LR
@@ -296,28 +280,26 @@ flowchart LR
 
 ---
 
-## ⚡ Key Features & Capabilities
+## ✨ Core Capabilities
 
-- 🧭 **Dependency-First Cognitive Ordering**: Sorts review items by execution and architectural dependency rather than arbitrary alphabetical order.
-- 🔗 **100% Verified Line-Level Citations**: Every node, assertion, and code snippet links directly to line-specific GitHub diff URLs.
-- 🌐 **Polyglot AST & Semantics**: Deep lexical and AST symbol extraction across 11+ programming languages without needing heavy external language servers.
-- 🛡️ **Zero-Hallucination Firewall**: Deterministic validation verifies every generated scene against the extracted PRReviewModel.
-- ⚡ **Multi-Key AI High Availability**: Automatic load distribution and failover across Google Gemini and OpenAI API keys.
+- 🧭 **Dependency-First Ordering**: Sequenced by architectural dependency rather than arbitrary alphabetical ordering.
+- 🔗 **100% Verified Citations**: Every node, assertion, and code snippet links directly to line-specific GitHub diff URLs.
+- 🌐 **Polyglot AST Engine**: Fast, deterministic symbol extraction across 11+ programming languages without external language server dependencies.
+- 🛡️ **Zero-Hallucination Firewall**: Deterministic validation verifies every generated scene against the extracted `PRReviewModel`.
+- ⚡ **Multi-Key High Availability**: Automatic key cycling and fallback across Google Gemini and OpenAI.
 - 🔍 **Signal vs. Noise Filtering**: Automatically detects and separates lockfiles, generated assets, test fixtures, and boilerplate from core logic.
-- 🧪 **4-State Test Existence Matrix**: Distinguishes between `TEST_EXISTS`, `TEST_MISSING`, `TEST_NOT_ANALYZED`, and `TEST_UNAVAILABLE` to eliminate false negative assertions.
-- 🔒 **Zero-Storage Security Policy**: Code diffs and source files are processed strictly in ephemeral RAM and never written to disk or used for AI training.
+- 🧪 **4-State Test Existence Matrix**: Distinguishes between `TEST_EXISTS`, `TEST_MISSING`, `TEST_NOT_ANALYZED`, and `TEST_UNAVAILABLE` to eliminate false negatives.
+- 🔒 **Zero-Storage Security Policy**: Code diffs and source files are processed in ephemeral memory and never persisted to disk or used for training.
 - 🎬 **Studio Presentation Mode**: Fullscreen interactive presentation viewer with timeline scrubber, playback speeds (1x, 1.5x, 2x), and keyboard navigation.
-- 🎨 **Cinematic Studio Themes**: 5 customizable studio accent palettes (Purple, Blue, Teal, Amber, Pink) with native dark and light mode support.
-- 📤 **Shareable Permanent Links**: Instant share URLs for asynchronous team reviews, Slack sharing, or pull request comments.
+- 🎨 **Cinematic Studio Themes**: 5 customizable accent palettes (Purple, Blue, Teal, Amber, Pink) with native dark and light mode support.
+- 📤 **Shareable Permanent Links**: Instant share URLs for async team reviews, standups, or PR comments.
 - 🚀 **Two-Tier Resilient Caching**: High-speed Upstash Redis caching for PR diffs and PostgreSQL persistence for generated storyboards.
 
 ---
 
 ## 🔬 Static Analysis & Polyglot Engine
 
-PR Movie features a lightweight, high-performance static analysis engine capable of scanning polyglot codebases to extract symbol definitions, import/export contracts, and call dependencies:
-
-### Supported Languages & File Types
+PullMotion features a lightweight static analysis engine that extracts symbol definitions, import/export contracts, and call dependencies across major languages:
 
 | Language | File Extensions | Extracted Semantics |
 |:---|:---|:---|
@@ -331,80 +313,43 @@ PR Movie features a lightweight, high-performance static analysis engine capable
 | **Ruby** | `.rb` | Classes, Modules, Methods (`def`), `require` / `require_relative` |
 | **SQL & Schemas** | `.sql`, `.prisma` | Tables, Migrations, Models, Relations, Invariant Schema Alterations |
 
-### 4-State Test Existence Model
+### 4-State Test Existence Matrix
 
-Rather than making binary assumptions about test coverage, PR Movie enforces a 4-state epistemological model:
+> [!NOTE]
+> Rather than assuming binary test pass/fail coverage on incomplete PR diffs, PullMotion enforces an epistemologically strict 4-state model:
 
-```
-┌────────────────────┐   PR includes tests covering modified symbols
-│    TEST_EXISTS     │ ──► Verified test assertions in diff
-└────────────────────┘
-┌────────────────────┐   PR modifies business logic with zero matching tests
-│    TEST_MISSING    │ ──► High-confidence warning for reviewers
-└────────────────────┘
-┌────────────────────┐   Non-code files, docs, or pure cosmetic changes
-│ TEST_NOT_ANALYZED  │ ──► Test suite execution not applicable
-└────────────────────┘
-┌────────────────────┐   PR diff is partial, truncated, or external repo
-│  TEST_UNAVAILABLE  │ ──► Explicit uncertainty preserved (no false negatives)
-└────────────────────┘
-```
+- **`TEST_EXISTS`**: PR contains test files with verified assertions covering modified symbols.
+- **`TEST_MISSING`**: PR alters critical business logic with zero matching test modifications (high-confidence warning).
+- **`TEST_NOT_ANALYZED`**: Non-code files, documentation, or pure cosmetic modifications where tests are not applicable.
+- **`TEST_UNAVAILABLE`**: PR diff is truncated or relies on external test suites outside the PR payload (preserves explicit uncertainty).
 
 ---
 
 ## 🤖 AI Story Engine & Failover Matrix
 
-PR Movie decouples prompt engineering, model orchestration, and schema validation to ensure maximum reliability and uptime:
+PullMotion decouples prompt building, model orchestration, and schema validation to ensure resilient uptime:
 
-### Multi-Key Pool & Automatic Fallback
-
-```
-                    ┌────────────────────────┐
-                    │ Multi-Key Pool Manager │
-                    └───────────┬────────────┘
-                                │
-          ┌─────────────────────┴─────────────────────┐
-          ▼                                           ▼
-┌───────────────────────────┐               ┌───────────────────────────┐
-│ Primary: Google Gemini    │               │ Fallback: OpenAI          │
-│ • gemini-2.0-flash        │ ──(Failover)─►│ • gpt-4o                  │
-│ • gemini-1.5-flash        │               │                           │
-│ • Multi-Key Round Robin   │               │                           │
-└───────────────────────────┘               └───────────────────────────┘
+```mermaid
+flowchart LR
+    Manager["Multi-Key Pool Manager"] --> Primary["Google Gemini (Primary)\n• gemini-2.0-flash\n• gemini-1.5-flash"]
+    Primary -- Failover / Rate-Limit --> Fallback["OpenAI API (Fallback)\n• gpt-4o"]
 ```
 
-- **Comma-Separated Multi-Key Pool**: Set multiple keys in `GEMINI_API_KEYS` or `OPENAI_API_KEYS` to bypass individual key rate limits.
+- **Comma-Separated Multi-Key Pool**: Supply multiple keys in `GEMINI_API_KEYS` or `OPENAI_API_KEYS` to eliminate single-key rate limits.
 - **Model Fallback Chain**: Automatically tries `gemini-2.0-flash` → `gemini-1.5-flash` → OpenAI `gpt-4o`.
-- **Low-Temperature Determinism**: Temperature set to `0.2` with strict JSON mode output.
-- **Evidence-Only System Instructions**: The AI is explicitly forbidden from introducing phantom services, unverified metrics, or uncited file paths.
+- **Low-Temperature Determinism**: Temperature pinned at `0.2` with strict JSON-only output mode.
+- **Strict Grounding Rules**: The model is bound by explicit system instructions preventing the introduction of uncited services, metrics, or file paths.
 
 ---
 
 ## 🎨 Studio Workspace & Presentation Mode
 
-The review studio offers a full-featured video-like environment designed for individual and group code reviews:
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ 🎬 PR Movie Studio              [Theme: 🟣 🔵 🟢 🟡 🔴]  [Presentation Mode] │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│                            ACTIVE SCENE CANVAS                              │
-│             [ Before / After Architecture Node-Edge Topology ]             │
-│                                                                             │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ ◀ Prev Scene  [ ▶ Play / ❚❚ Pause ]  Next Scene ▶      [ Speed: 1x 1.5x 2x ] │
-│ ────────────────────────●────────────────────────────────────────────────── │
-│ 00:14 / 01:30                                                               │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ [Scene 1: Overview] [Scene 2: Architecture] [Scene 3: Diffs] [Scene 4: Matrix] │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+The review studio offers a full-featured video-like interface designed for individual and group code reviews:
 
 - **Interactive Timeline**: Scrub through scenes, inspect progress indicators, and jump to specific timestamps.
 - **Fullscreen Presentation Overlay**: Dim background distractions and present pull requests during team standups, sprint reviews, or architecture syncs.
 - **Evidence Drawer**: Click on any scene item or claim to slide out exact line-level GitHub code citations.
-- **Theming System**: Select from 5 curated accent themes (Purple, Blue, Teal, Amber, Pink) with full dark and light mode adaptation.
+- **Theme Customization**: Select from 5 curated accent themes (Purple, Blue, Teal, Amber, Pink) with full dark and light mode adaptation.
 
 ---
 
@@ -499,22 +444,20 @@ pullmotion/
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quickstart
 
 ### Prerequisites
 
-Ensure your development environment meets the following requirements:
-
 - **Node.js**: `v20.0.0` or higher
-- **npm**: `v10.0.0` or higher (or `pnpm` / `yarn`)
-- **PostgreSQL**: `v15.0` or higher (local instance or hosted on Supabase / Neon)
-- **GitHub Personal Access Token**: Classic token with `public_repo` scope (or fine-grained token)
-- **Upstash Redis**: Free serverless Redis database
+- **npm**: `v10.0.0` or higher
+- **PostgreSQL**: `v15.0` or higher (local or hosted on Neon / Supabase)
+- **GitHub Token**: Personal access token with `public_repo` scope
+- **Upstash Redis**: Serverless Redis database
 - **Clerk Account**: For user authentication
 
 ---
 
-### Installation Steps
+### Installation & Setup
 
 #### 1. Clone the Repository
 
@@ -531,40 +474,33 @@ npm install
 
 #### 3. Configure Environment Variables
 
-Copy `.env.example` to create your local `.env` file:
-
 ```bash
 cp .env.example .env
 ```
 
-Open `.env` in your editor and fill in your credentials (see [Environment Variables](#-environment-variables)).
+Edit `.env` and fill in your credentials (see [Environment Variables](#-environment-variables)).
 
-#### 4. Initialize the Database
-
-Run Prisma migrations to create the PostgreSQL tables:
+#### 4. Apply Database Migrations
 
 ```bash
-# Emit Prisma contract and run migrations
 npm run contract:emit
 ```
 
-#### 5. Run the Development Server
+#### 5. Start Development Server
 
 ```bash
 npm run dev
 ```
 
-Visit **[http://localhost:3000](http://localhost:3000)** in your browser.
+Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
 
 ## 🔐 Environment Variables
 
-The application requires the following environment variables configured in `.env`:
-
-| Variable Name | Required | Description | Example |
+| Variable | Required | Description | Example |
 |:---|:---:|:---|:---|
-| `DATABASE_URL` | **Yes** | PostgreSQL connection string | `postgresql://user:pass@localhost:5432/prmovie` |
+| `DATABASE_URL` | **Yes** | PostgreSQL connection URL | `postgresql://user:pass@localhost:5432/prmovie` |
 | `GITHUB_TOKEN` | **Yes** | GitHub Personal Access Token (5,000 req/hr rate limit) | `ghp_xxxxxxxxxxxxxxxxxxxx` |
 | `GEMINI_API_KEYS` | **Yes** | Comma-separated Google Gemini API keys for failover | `AIzaSyA...,AIzaSyB...` |
 | `OPENAI_API_KEYS` | Optional | Comma-separated OpenAI API keys for fallback | `sk-proj-xxxxxxxxxxxx` |
@@ -580,9 +516,9 @@ The application requires the following environment variables configured in `.env
 
 ---
 
-## 🗄️ Database Schema (Prisma 8)
+## 🗄️ Database Schema
 
-PR Movie utilizes Prisma 8 with PostgreSQL. The contract defines two core data models:
+PullMotion uses Prisma 8 with PostgreSQL:
 
 ```prisma
 // src/prisma/contract.prisma
@@ -616,9 +552,6 @@ model CachedPR {
   @@unique([owner, repo, pullNumber, headSha])
 }
 ```
-
-- **`Movie`**: Stores validated, rendered 6-scene storyboards indexed by `sourceHash` (SHA-256 hash of the PR Head SHA and diff payload) to prevent redundant AI generation costs.
-- **`CachedPR`**: Caches fetched GitHub PR metadata, commit logs, and file patches indexed by repository coordinate and commit SHA.
 
 ---
 
@@ -660,10 +593,10 @@ Fetches raw PR metadata, commit logs, and file diffs from GitHub with Upstash ca
 
 ---
 
-### 2. Generate PR Movie Storyboard
+### 2. Generate Storyboard
 **`POST /api/movies`**
 
-Performs static AST analysis, builds the dependency graph, executes the AI story planner, validates evidence through the hallucination firewall, and returns the complete PRMovie object.
+Executes static AST analysis, builds the dependency graph, calls the AI story planner, validates evidence through the hallucination firewall, and returns the complete `PRMovie` storyboard.
 
 **Request Body:**
 ```json
@@ -690,67 +623,17 @@ Performs static AST analysis, builds the dependency graph, executes the AI story
       "author": "gaearon",
       "totalDuration": 75
     },
-    "scenes": [
-      {
-        "id": "scene-overview",
-        "type": "overview",
-        "title": "Executive Summary & Architectural Impact",
-        "duration": 12,
-        "author": "gaearon",
-        "stats": { "additions": 142, "deletions": 38, "filesChanged": 4, "commits": 2 },
-        "summary": "Refactors reconciler batching to improve render throughput by 18%."
-      },
-      {
-        "id": "scene-before-after",
-        "type": "before_after",
-        "title": "Reconciliation Flow Architecture",
-        "duration": 15,
-        "before": { "nodes": [...], "edges": [...] },
-        "after": { "nodes": [...], "edges": [...] },
-        "claims": [...]
-      },
-      {
-        "id": "scene-code-changes",
-        "type": "code_changes",
-        "title": "Core WorkLoop Invariant Updates",
-        "duration": 18,
-        "filePath": "packages/react-reconciler/src/ReactFiberWorkLoop.js",
-        "language": "javascript",
-        "snippets": [...]
-      },
-      {
-        "id": "scene-breakdown",
-        "type": "change_breakdown",
-        "title": "Domain Breakdown",
-        "duration": 10,
-        "categories": [...]
-      },
-      {
-        "id": "scene-files",
-        "type": "files_changed",
-        "title": "File Manifest & Review Priority",
-        "duration": 8,
-        "files": [...]
-      },
-      {
-        "id": "scene-summary",
-        "type": "summary",
-        "title": "Reviewer Action Plan & Checklist",
-        "duration": 12,
-        "bullets": [...],
-        "reviewerChecklist": [...]
-      }
-    ]
+    "scenes": [...]
   }
 }
 ```
 
 ---
 
-### 3. Retrieve Saved PR Movie
+### 3. Retrieve Saved Storyboard
 **`GET /api/movies/:movieId`**
 
-Retrieves a persisted PR Movie by its unique ID for instant playback and sharing.
+Retrieves a persisted storyboard by its unique ID for instant playback and sharing.
 
 **Response (200 OK):**
 ```json
@@ -764,44 +647,40 @@ Retrieves a persisted PR Movie by its unique ID for instant playback and sharing
 
 ## 🧪 Testing & Quality Assurance
 
-PR Movie maintains a high standard of reliability with comprehensive unit and integration tests powered by [Vitest](https://vitest.dev).
-
-### Running Tests
+PullMotion includes unit and integration tests powered by [Vitest](https://vitest.dev).
 
 ```bash
 # Run all tests once
 npm test
 
-# Run tests in interactive watch mode
+# Run tests in watch mode
 npm run test:watch
 
 # Run linter
 npm run lint
 ```
 
-### Test Coverage Highlights
+### Test Suite Domains
 
-- **Polyglot AST Scanners**: Tests lexical parsing across TypeScript, Python, Go, Rust, Java, C#, and Ruby.
-- **Dependency Graph Engine**: Validates acyclic graph traversal, root-to-leaf topological ordering, and cross-file symbol resolution.
-- **Hallucination Firewall**: Tests edge-case rejection of phantom services, invalid file references, and malformed scene objects.
+- **Polyglot AST Scanners**: Validates lexical parsing across TypeScript, Python, Go, Rust, Java, C#, and Ruby.
+- **Dependency Graph Engine**: Tests acyclic traversal, topological sorting, and cross-file symbol resolution.
+- **Hallucination Firewall**: Tests edge-case rejection of phantom services, uncited file references, and malformed scene objects.
 - **Diff & Patch Analyzers**: Tests complex unified git diff chunks, binary file filtering, and hunk line mapping.
-- **Rate Limiting & Hashing**: Validates sliding window IP throttles and deterministic SHA-256 source hash generation.
+- **Rate Limiting & Hashing**: Validates sliding-window IP throttles and deterministic SHA-256 source hash generation.
 - **Studio Playback Controls**: Tests requestAnimationFrame time stepping, seeking, keyboard shortcuts, and speed multipliers.
 
 ---
 
 ## 🛡️ Security, Privacy & Zero-Storage Policy
 
-PR Movie is designed with enterprise-grade privacy and security at its core:
-
-1. **Zero-Storage Execution**: Source code and diffs are loaded into ephemeral server memory during analysis and never written to disk or used to train public AI models.
-2. **Deterministic Source Hashing**: Movies are deduplicated using SHA-256 hashes of the PR Head SHA and diff structure, avoiding unnecessary LLM calls.
-3. **Sliding-Window Rate Limiting**: Built-in Upstash Redis rate limiting protects the API from denial-of-service and credential scraping attacks.
+1. **Zero-Storage Memory Execution**: Source code and diffs are loaded into ephemeral server memory during analysis and never written to disk or used for AI model training.
+2. **Deterministic Source Hashing**: Storyboards are deduplicated using SHA-256 hashes of the PR Head SHA and diff structure.
+3. **Sliding-Window Rate Limiting**: Built-in Upstash Redis rate limiting protects the API from abuse.
 4. **Environment Isolation**: All AI keys, database credentials, and Clerk secrets remain strictly on the backend.
 
 ---
 
-## ⌨️ Keyboard Shortcuts & Studio Controls
+## ⌨️ Studio Keyboard Shortcuts
 
 | Key Shortcut | Action | Scope |
 |:---|:---|:---|
@@ -815,14 +694,14 @@ PR Movie is designed with enterprise-grade privacy and security at its core:
 
 ## 🤝 Contributing
 
-We welcome contributions from the developer community! To contribute:
+Contributions are welcome! To contribute:
 
 1. **Fork the Repository** on GitHub.
 2. **Create a Feature Branch**:
    ```bash
    git checkout -b feat/my-awesome-feature
    ```
-3. **Write Clean, Tested Code** and ensure the test suite passes:
+3. **Write Clean, Tested Code**:
    ```bash
    npm test
    ```
@@ -834,19 +713,19 @@ We welcome contributions from the developer community! To contribute:
    ```bash
    git push origin feat/my-awesome-feature
    ```
-6. **Open a Pull Request** describing your changes and link any related issues.
+6. **Open a Pull Request** describing your changes.
 
 ---
 
 ## 📜 License
 
-Distributed under the **MIT License**. See the [`LICENSE`](LICENSE) file for complete details.
+Distributed under the **MIT License**. See the [`LICENSE`](LICENSE) file for details.
 
 ---
 
 <div align="center">
 
 Built with ❤️ for developers who care about thoughtful, fast, and delightful code reviews.<br/>
-**[prmovie.dev](https://prmovie.dev)**
+**[pullmotion.dev](https://pullmotion.dev)**
 
 </div>
