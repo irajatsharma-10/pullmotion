@@ -16,24 +16,16 @@ Your job is to explain the changes in clear, developer-friendly language so any 
 5. HOW the changes are tested and verified.
 6. WHAT specific edge cases, failure modes, or things to watch out for reviewers should check.
 
-GOLDEN RULE: Keep language practical, clear, and developer-friendly. A developer should never need a dictionary to understand your slides.
+GOLDEN RULE: Slides are visual presentation cards, NOT essay booklets or reading paragraphs. Focus on the actual technical goal and resolution. Keep points punchy, direct, and scannable.
 
-DEVELOPER-FRIENDLY TONE & CLARITY MANDATE:
-- Avoid dense academic jargon or robotic buzzwords (NEVER use terms like "invariant delta", "ontological mutations", "blast radius heuristics", "epistemological", or overly complex philosophical vocabulary).
-- Use natural, straightforward software engineering English (e.g. "How data flows", "What changed", "Why this approach was chosen", "Key behaviors guaranteed", "Edge cases to check").
-- Reject superficial 1-liners (e.g. don't just say "Updated auth to add token" or "Added retry logic" — explain what the code actually does and how callers use it).
-- Scene Titles MUST be intuitive, human-friendly titles (e.g. "Webhook Retry with Exponential Backoff" instead of raw file paths or abstract buzzwords).
-
-HUMAN-READABLE & SUBSTANTIVE CONTENT MANDATE:
-- Every slide MUST deliver practical, useful insights for the code review. No fluff, no filler.
-- Explanations MUST explain what the code does, why it was implemented this way, and what edge cases to test.
-
-DYNAMIC COVERAGE RULES:
-- Generate exactly the ${plan.plannedScenes.length} planned scenes in the exact sequence specified.
-- Dedicated scenes: Important standalone conceptual changes. Focus on the invariant change, design rationale, and reviewer watch-outs.
-- Grouped scenes: Coordinated changes across multiple files. Explain the common pattern once with representative evidence and cross-file ripple.
-- Aggregate changes: Low-signal noise (lockfiles, generated files, snapshots) summarized cleanly without dedicated scenes.
-- Evidence-First: Do not invent file names, symbols, or metrics not present in the PRReviewModel evidence. Use files as proof points.
+SLIDE-READY PRESENTATION MANDATE:
+- Focus on the actual technical objective and implementation reality.
+- "summary": 1-2 punchy sentences capturing the core technical goal and what this PR accomplishes.
+- "problemStatement": 1 concise sentence on the root bug/motivation.
+- "architecturalImpact": 1 short phrase on system effect (or leave empty if minimal/test-only).
+- "testingRealityVerdict": 1 short phrase on verification method.
+- NEVER repeat the exact same sentence across summary, architecturalImpact, and testingRealityVerdict.
+- Avoid dense essay filler or repetitive word salad.
 
 EXACT PLANNED SCENE SEQUENCE (${plan.plannedScenes.length} scenes):
 ${plan.plannedScenes
@@ -52,11 +44,11 @@ EXACT SCENE SHAPES:
      "duration": 6,
      "author": string,
      "stats": { "additions": number, "deletions": number, "filesChanged": number, "commits": number },
-     "summary": string, // Detailed 2-3 sentence executive briefing
+     "summary": string, // Punchy 1-2 sentence core goal & technical achievement
      "contractVerdict": string, // e.g. "BREAKING PUBLIC API", "SCHEMA & MIGRATION UPDATE", "INTERNAL RUNTIME REFACTOR"
      "problemStatement": string, // Root engineering problem or business driver
-     "architecturalImpact": string, // Macro system impact across services/storage/consumers
-     "testingRealityVerdict": string // Assessment of validation depth vs coverage gaps
+     "architecturalImpact": string, // Short phrase on system impact (or empty if minimal)
+     "testingRealityVerdict": string // Short phrase on verification status
    }
 
 2. "before_after" (ONLY IF PLANNED):

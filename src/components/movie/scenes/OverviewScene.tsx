@@ -56,30 +56,41 @@ export function OverviewScene({ scene }: SceneComponentProps<OverviewSceneData>)
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.1 }}
-          className="text-xs sm:text-sm text-slate-200 w-full max-w-3xl mx-auto leading-relaxed bg-[#0b0e17]/90 border border-white/10 p-3.5 sm:p-4 rounded-2xl shadow-xl backdrop-blur-md text-left"
+          className="w-full max-w-3xl mx-auto bg-[#0b0e17]/90 border border-white/10 p-4 sm:p-5 rounded-2xl shadow-xl backdrop-blur-md text-left space-y-3"
         >
-          <div className="flex items-center gap-1.5 mb-1.5 font-bold text-indigo-300 text-xs uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400 inline" />
-            <span>What This PR Does</span>
+          <div>
+            <div className="flex items-center gap-1.5 mb-1 font-bold text-indigo-300 text-xs uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+              <span>Core Goal & Technical Objective</span>
+            </div>
+            <p className="text-slate-100 text-sm sm:text-base leading-relaxed font-medium">
+              {scene.summary}
+            </p>
           </div>
-          <p className="text-slate-100 text-xs sm:text-sm leading-relaxed">{scene.summary}</p>
+
+          {scene.problemStatement && (
+            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 leading-relaxed flex items-start gap-2">
+              <span className="font-bold text-amber-400 uppercase text-[10px] font-mono shrink-0 mt-0.5">Problem:</span>
+              <span>{scene.problemStatement}</span>
+            </div>
+          )}
 
           {(scene.architecturalImpact || scene.testingRealityVerdict) && (
-            <div className="mt-2.5 pt-2.5 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            <div className="pt-2 border-t border-white/10 flex flex-wrap sm:flex-nowrap gap-2 text-xs">
               {scene.architecturalImpact && (
-                <div className="bg-black/40 p-2.5 rounded-xl border border-white/[0.08]">
+                <div className="flex-1 bg-black/40 px-3 py-2 rounded-xl border border-white/[0.08]">
                   <span className="text-sky-400 font-bold block mb-0.5 uppercase tracking-wider text-[10px] font-mono">
-                    What It Changes:
+                    Impact
                   </span>
-                  <span className="text-slate-200 leading-snug text-xs">{scene.architecturalImpact}</span>
+                  <span className="text-slate-300 text-xs leading-snug line-clamp-2">{scene.architecturalImpact}</span>
                 </div>
               )}
               {scene.testingRealityVerdict && (
-                <div className="bg-black/40 p-2.5 rounded-xl border border-white/[0.08]">
+                <div className="flex-1 bg-black/40 px-3 py-2 rounded-xl border border-white/[0.08]">
                   <span className="text-emerald-400 font-bold block mb-0.5 uppercase tracking-wider text-[10px] font-mono">
-                    How It&apos;s Tested:
+                    Verification
                   </span>
-                  <span className="text-slate-200 leading-snug text-xs">{scene.testingRealityVerdict}</span>
+                  <span className="text-slate-300 text-xs leading-snug line-clamp-2">{scene.testingRealityVerdict}</span>
                 </div>
               )}
             </div>
