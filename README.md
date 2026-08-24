@@ -12,7 +12,7 @@
 [![Vitest](https://img.shields.io/badge/Tests-69_Passed-brightgreen?style=flat-square&logo=vitest)](https://vitest.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-[Live Demo](https://pullmotion.dev) &bull; [Pipeline Architecture](#how-it-works) &bull; [Review Flow](#the-6-scene-storyboard) &bull; [Quickstart](#quickstart)
+[Pipeline Architecture](#how-it-works) &bull; [Review Flow](#the-6-scene-storyboard) &bull; [Quickstart](#quickstart)
 
 </div>
 
@@ -135,6 +135,5 @@ Distributed under the [MIT License](LICENSE).
 <div align="center">
 
 Built for engineers who respect their own time.<br/>
-**[pullmotion.dev](https://pullmotion.dev)**
 
 </div>
